@@ -183,7 +183,7 @@ module.exports = function(app){
     Post.getOne(req.params.name, req.params.day, req.params.title, function(err,post){
       if(err){
         req.falsh('error',err);
-        res.redirect('/');
+        return res.redirect('/');
       }
       res.render('article',{
         title: req.params.title,
