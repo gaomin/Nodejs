@@ -1,7 +1,8 @@
 var crypto = require('crypto'),
   fs = require('fs'),
 	User = require('../models/user.js'),
-  Post = require('../models/post.js');
+  Post = require('../models/post.js'),
+  Comment = require('../models/Comment.js');
 
 
 module.exports = function(app){
@@ -182,7 +183,7 @@ module.exports = function(app){
   app.get('/u/:name/:day/:title',function(req,res){
     Post.getOne(req.params.name, req.params.day, req.params.title, function(err,post){
       if(err){
-        req.falsh('error',err);
+        req.flash('error',err);
         return res.redirect('/');
       }
       res.render('article',{
@@ -195,14 +196,82 @@ module.exports = function(app){
     });
   });
 
+  app.get('/edit/:name/:day/:title', checkLogin);
+  app.get('/edit/:name/:day/:title',function(req,res){
+    var currentUser = req.session.user;
 
+    Post.edit(currentUser.name, req.params.day, req.params.title,function(err,post){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('back');
+      }
+      res.render('edit',{
+        title: '编辑',
+        post: post,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  });
 
+  app.post('/edit/:name/:day/:title',checkLogin);
+  app.post('/edit/:name/:day/:title',function(req,res){
+    var currentUser = req.session.user;
+ console.log(currentUser);
 
+    Post.update(currentUser.name,req.params.day,req.params.title, req.body.post,function(err){
+//文章页地址
+      var url = '/u/'+ req.params.name +'/'+ req.params.day + '/' + req.params.title;   
+      if(err){
+        req.flash('error',err);
+        return res.redirect(url); 
+      }
+      req.flash('success','修改成功');
+      res.redirect(url);
+    });
+  });
+
+  app.get('/remove/:name/:day/:title',checkLogin);
+  app.get('/remove/:name/:day/:title',function(req,res){
+    var currentUser = req.session.user;
+
+    Post.remove(currentUser.name, req.params.day, req.params.title, function(err){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('back');
+      }
+      req.flash('success','删除成功！');
+      res.redirect('/');
+    });
+  });
+
+  app.post('/u/:name/:day/:title',function(req,res){
+    var date = new Date(),
+        time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+
+    var comment = {
+      name: req.body.name,
+      email: req.body.email,
+      website: req.body.website,
+      time: time,
+      content: req.body.content
+    };
+    var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+    newComment.save(function(err){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('back');
+      }
+      req.flash('success','留言成功！');
+      res.redirect('back');
+    });
+  });
 
   function checkLogin(req,res,next){
     if(!req.session.user){
       req.flash('error','未登录');
-      res.redirect('/login');
+       return res.redirect('/login');
     }
     next();
   }
@@ -210,7 +279,7 @@ module.exports = function(app){
   function checkNotLogin(req,res,next){
     if(req.session.user){
       req.flash('error','已登录');
-      res.redirect('back');
+      return res.redirect('back');
     }
     next();
   }
