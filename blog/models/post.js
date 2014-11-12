@@ -27,7 +27,8 @@ Post.prototype.save = function(callback){
 		title: this.title,
 		tags: this.tags,
 		post: this.post,
-		comments:[]
+		comments:[],
+		pv: 0
 	};
 	mongodb.open(function(err,db){
 		if(err){
@@ -85,18 +86,7 @@ Post.getTen = function(name, page, callback){
 				});
 			});
 
-			// collection.find(query).sort({
-			// 	time: -1
-			// }).toArray(function(err,docs){
-			// 	mongodb.close();
-			// 	if(err){
-			// 		return callback(err);
-			// 	}
-			// 	docs.forEach(function(doc){
-			// 		doc.post = markdown.toHTML(doc.post);
-			// 	});
-			// 	callback(null,docs);
-			// });
+			
 		});
 	});
 };
@@ -117,21 +107,38 @@ Post.getOne = function(name,day,title,callback){
 				'time.day': day,
 				'title': title
 			},function(err,doc){
-				mongodb.close();
+				
 				if(err){
+					mongodb.close();
 					return callback(err);
 				}
 				if(doc){
+					collection.update({
+						'name': name,
+						'time.day': day,
+						'title': title
+					},{
+						$inc: {'pv': 1}
+					}, function(err){
+						mongodb.close();
+						if(err){
+							return callback(err);
+						}
+					});
+
 					doc.post = markdown.toHTML(doc.post);
 					doc.comments.forEach(function(comment){
 						comment.content = markdown.toHTML(comment.content);
 					});
+					callback(null,doc);			//返回查询的一篇文章
 				}
-				callback(null,doc);			//返回查询的一篇文章
+				
 			});
 		});
 	});
 };
+
+
 
 //返回原始发表的内容（markdown格式）
 Post.edit = function(name,day,title,callback){
