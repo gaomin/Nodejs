@@ -26,8 +26,10 @@ require([
 	'angularRoute',
     'myApp',
     'domReady',
-    'jquery'
+    'jquery',
+    'scripts/controllers/register'
     ],
+    
     function (angular,angularRoute,myApp,domReady,$) {
 
     	 myApp.config(['$routeProvider',
@@ -47,7 +49,7 @@ require([
 		         
 		        }).when('/error',{
 		          templateUrl: 'views/404.html',
-		          controller: function(){console.log('ddddd');}
+		          
 		        });
 	        }
 	    ]);
