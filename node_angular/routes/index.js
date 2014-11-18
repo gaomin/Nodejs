@@ -8,18 +8,30 @@ module.exports = function(app){
 	app.post('/reg', function (req, res) {
     	var data = req.body.name;
     	console.log(data);
-    	res.send({'success':'true'});
+    	
     	var newUser = new User({
 	        name: req.body.name,
 	        password: req.body.password,
 	        email: req.body.email
    	 	});
 
-   	 	newUser.save(function (err, user) {
-	        if (err) {
-	          req.flash('error', err);
-	          return res.redirect('/');
-	       	}
+    	User.get(newUser.name, function(err,user){
+    		if(user){
+    			
+    			 return res.status('error').send('用户已存在!');
+    			
+       			 //return res.redirect('/register');//返回注册页
+    		}
+    		newUser.save(function (err, user) {
+		        if (err) {
+		          
+		          return res.status('error').send(err);
+		         // return res.redirect('/');
+		       	}
+
+		       	 return res.status('success').send('注册成功!');
+	    	});
     	});
+   	 	
 	});
 };

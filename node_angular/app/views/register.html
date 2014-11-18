@@ -1,4 +1,5 @@
 <h2 class="col-md-offset-3">新用户注册</h2><br/>
+<div ng-show = 'message' style="color:red; padding-left: 14px;" >{{message}}</div>
 <form name="myForm" class="col-md-8" novalidate>
 
 	<input  type="text" name="name" id="input" class="form-control" placeholder = '请输入用户名' ng-model = 'user.name' required /> 

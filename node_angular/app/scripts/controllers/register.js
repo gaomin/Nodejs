@@ -8,7 +8,8 @@
 define(['angular','myApp'],function(angular,myApp){
 	return angular.module('myApp')
 			.controller('register',['$scope','$http', function($scope,$http) {  
- 					
+ 					$scope.message = '';
+
  					$scope.user = {
  						name: 'gm',
  						password: 'gm',
@@ -17,10 +18,10 @@ define(['angular','myApp'],function(angular,myApp){
  					};
  					
  					$scope.sendData = function(){
- 						
  						$http.post('/reg',$scope.user)
- 							.success(function(){
-
+ 							.success(function(data){
+ 								console.log(data);	
+ 								$scope.message = data;
  							});
  					};
   				}]
