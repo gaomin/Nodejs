@@ -47,7 +47,8 @@ require([
 		        .when('/welcome', {
 		          templateUrl: 'views/welcome.html',
 		         
-		        }).when('/error',{
+		        })
+		        .when('/error',{
 		          templateUrl: 'views/404.html',
 		          
 		        });
