@@ -17,19 +17,17 @@ module.exports = function(app){
 
     	User.get(newUser.name, function(err,user){
     		if(user){
-    			
-    			 return res.status('error').send('用户已存在!');
-    			
-       			 //return res.redirect('/register');//返回注册页
+
+    			 return res.status('error').json({message: '用户已存在!', flag: 'exist', success: true});
     		}
     		newUser.save(function (err, user) {
 		        if (err) {
 		          
-		          return res.status('error').send(err);
-		         // return res.redirect('/');
+		          return res.status('error').json({message: err, success: false});
+		         
 		       	}
 
-		       	 return res.status('success').send('注册成功!');
+		       	 return res.status('success').json({message: '注册成功!', flag: 'new', success: true});
 	    	});
     	});
    	 	
