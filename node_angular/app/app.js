@@ -27,7 +27,9 @@ require([
     'myApp',
     'domReady',
     'jquery',
-    'scripts/controllers/register'
+    'scripts/controllers/register',
+    'scripts/directives/validate'
+
     ],
     
     function (angular,angularRoute,myApp,domReady,$) {

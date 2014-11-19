@@ -1,5 +1,6 @@
 <h2 class="col-md-offset-3">新用户注册</h2><br/>
 <div ng-show = 'message' style="color:red; padding-left: 14px;" >{{message}}</div>
+
 <form name="myForm" class="col-md-8" novalidate>
 
 	<input  type="text" name="name" id="input" class="form-control" placeholder = '请输入用户名' ng-model = 'user.name' required /> 
@@ -8,17 +9,18 @@
 	</span>
 	
 	
-	<input  type = 'password' class="form-control" placeholder = '请输入密码' name = 'passw' ng-model = 'user.password' required/>
+	<input  type = 'password' class="form-control" id="passw" placeholder = '请输入密码' name = 'passw' ng-model = 'user.password' upload  required/>
 	<span style="color:red; font-size:10px" ng-show="myForm.passw.$dirty && myForm.passw.$invalid">
 		<span ng-show="myForm.passw.$error.required">密码不能是空哦！</span>
 	</span>
 	
 
-	<input  type = 'password' class="form-control" placeholder = '请再次输入密码' name = 'repassw' ng-model = 'user.repassword' required/>
+	<input  type = 'password' class="form-control" placeholder = '请再次输入密码' name = 'repassw' ng-model = 'user.repassword' upload required/>
 	<span style="color:red; font-size:10px" ng-show="myForm.repassw.$dirty && myForm.repassw.$invalid">
 		<span ng-show="myForm.repassw.$error.required">确认密码不能是空哦！</span>
-	</span>
 
+	</span>
+	<span style="color:red; font-size:10px">{{tips}}</span>
 
 	<input  type='email' class="form-control" placeholder='请输入邮箱' name="email" ng-model = 'user.email' required/>
 	<span style="color:red;font-size:10px" ng-show="myForm.email.$dirty && myForm.email.$invalid">
