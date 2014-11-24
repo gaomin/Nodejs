@@ -29,7 +29,8 @@ require([
     'jquery',
     'scripts/controllers/regController',
     'scripts/directives/validate',
-    'scripts/controllers/logController'
+    'scripts/controllers/logController',
+    'scripts/controllers/homeController.js'
 
     ],
     
@@ -41,7 +42,7 @@ require([
 	          $routeProvider
 		        .when('/',{
 		          templateUrl: 'views/welcome.html',
-
+		          controller: 'homeController'
 		        })
 		        .when('/register',{
 		          templateUrl: 'views/register.html',
@@ -50,7 +51,8 @@ require([
 		        .when('/login', {
 		          templateUrl: 'views/login.html',
 		          controller: 'logController'
-		        });
+		        })
+		        .otherwise({redirectTo: '/'});
 		        
 	        }
 	    ]);
