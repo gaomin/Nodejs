@@ -1,0 +1,18 @@
+
+<h2 class="col-md-offset-3">用户登录</h2><br/>
+<div ng-show = 'message' style="color:red; padding-left: 14px;" >{{message}}</div>
+<form name="logForm" class="col-md-8" novalidate>
+
+	<input  type="text" name="name" id="input" class="form-control" placeholder = '请输入用户名' ng-model = 'user.name' required /> 
+	<span style="color:red; font-size:10px" ng-show="logForm.name.$dirty && logForm.name.$invalid">
+		<span ng-show="logForm.name.$error.required">用户名不能是空哦！</span>
+	</span>
+	
+	<input  type = 'password' class="form-control" id="passw" placeholder = '请输入密码' name = 'passw' ng-model = 'user.password'  required/>
+	<span style="color:red; font-size:10px" ng-show="logForm.passw.$dirty && logForm.passw.$invalid">
+		<span ng-show="logForm.passw.$error.required">密码不能是空哦！</span>
+	</span>
+
+	<a href="" type="button" class="btn btn-primary col-md-12" ng-click="sendData()"  ng-disabled="logForm.$invalid">登录</a>
+
+</form>

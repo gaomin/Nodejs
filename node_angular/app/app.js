@@ -27,8 +27,9 @@ require([
     'myApp',
     'domReady',
     'jquery',
-    'scripts/controllers/register',
-    'scripts/directives/validate'
+    'scripts/controllers/regController',
+    'scripts/directives/validate',
+    'scripts/controllers/logController'
 
     ],
     
@@ -44,16 +45,13 @@ require([
 		        })
 		        .when('/register',{
 		          templateUrl: 'views/register.html',
-		          controller: 'register'
+		          controller: 'regController'
 		        })
-		        .when('/welcome', {
-		          templateUrl: 'views/welcome.html',
-		         
-		        })
-		        .when('/error',{
-		          templateUrl: 'views/404.html',
-		          
+		        .when('/login', {
+		          templateUrl: 'views/login.html',
+		          controller: 'logController'
 		        });
+		        
 	        }
 	    ]);
 
