@@ -1,0 +1,4 @@
+define([
+	'./validate'
+	
+], function(){})

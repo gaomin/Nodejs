@@ -27,10 +27,8 @@ require([
     'myApp',
     'domReady',
     'jquery',
-    'scripts/controllers/regController',
-    'scripts/directives/validate',
-    'scripts/controllers/logController',
-    'scripts/controllers/homeController.js'
+    'scripts/controllers/all',
+    'scripts/directives/all'
 
     ],
     
