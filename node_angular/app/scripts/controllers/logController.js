@@ -11,7 +11,7 @@ define(['angular','myApp'], function(anugluar, myApp){
 			 			if(data.success){
 			 				$scope.message = data.message + '   3秒后自动跳转';
 			 				window.localStorage.user = $scope.user.name;
-			 				$rootScope.curUser = $scope.user.name;
+			 				$rootScope.curUser = window.localStorage.user;
 			 				window.location = '#/';
 							
 			 				}else {
